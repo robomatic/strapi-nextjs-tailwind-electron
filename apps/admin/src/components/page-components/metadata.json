@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_components_metadata",
+  "info": {
+    "displayName": "Metadata",
+    "icon": "hashtag"
+  },
+  "options": {},
+  "attributes": {
+    "pageTitle": {
+      "type": "string"
+    },
+    "metaKeywords": {
+      "type": "text"
+    },
+    "metaDescription": {
+      "type": "text"
+    }
+  }
+}

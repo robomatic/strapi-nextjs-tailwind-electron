@@ -1,0 +1,46 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Metadata": {
+      "displayName": "Metadata",
+      "type": "component",
+      "repeatable": false,
+      "component": "page-components.metadata"
+    },
+    "HeroCarousel": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "BrandCloud": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "TeamProfiles": {
+      "displayName": "TeamProfile",
+      "type": "component",
+      "repeatable": true,
+      "component": "page-components.team-profile"
+    }
+  }
+}

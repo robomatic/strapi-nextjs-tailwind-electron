@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@config "../../../../tailwind.config.ts";
+
+body {
+  background: var(--color-slate-800);
+  color: var(--color-slate-100);
+}
