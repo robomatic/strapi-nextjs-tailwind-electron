@@ -2,7 +2,9 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  checkAppStatus: (): Promise<AppStatus> => ipcRenderer.invoke('apps:checkStatus')
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -20,7 +22,3 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.api = api
 }
-
-contextBridge.exposeInMainWorld('electronAPI', {
-  checkAppStatus: () => ipcRenderer.invoke('apps:checkStatus')
-})

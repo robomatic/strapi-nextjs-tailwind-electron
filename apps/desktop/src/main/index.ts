@@ -7,7 +7,7 @@ import { launchApp, checkStrapiServerStatus } from './launch-utils'
 const adminServer = 'http://localhost:1337'
 const webServer = 'http://localhost:3000'
 
-const appStatus = {
+const appStatus: AppStatus = {
   admin: 'loading',
   web: 'loading'
 }
