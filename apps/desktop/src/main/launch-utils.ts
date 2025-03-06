@@ -10,11 +10,11 @@ export function launchApp(dir: string, command = 'dev'): void {
   })
 
   spawnProcess.on('close', (code) => {
-    console.log(`Strapi server exited with code ${code}`)
+    console.log(`Applocation process exited with code ${code}`)
   })
 
   spawnProcess.on('error', (error) => {
-    console.error('Failed to start Strapi server:', error)
+    console.error('Failed to start application process:', error)
   })
 
   process.on('exit', () => {
@@ -28,17 +28,17 @@ export function launchApp(dir: string, command = 'dev'): void {
   })
 }
 
-export function checkStrapiServerStatus(serverUrl: string): Promise<void> {
+export function checkApplicationServerStatus(serverUrl: string): Promise<void> {
   return new Promise<void>((resolve) => {
     const check = async (): Promise<void> => {
       try {
         const response = await fetch(serverUrl)
         if (response) {
-          console.log('Strapi server is up. Ready to perform additional actions.')
+          console.log('Application server is up. Ready to perform additional actions.')
           resolve()
         }
       } catch {
-        console.log('Strapi server is not yet up. Retrying in ' + retryInterval + 'ms...')
+        console.log('Application server is not yet up. Retrying in ' + retryInterval + 'ms...')
         setTimeout(check, retryInterval)
       }
     }

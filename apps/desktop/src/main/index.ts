@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { launchApp, checkStrapiServerStatus } from './launch-utils'
+import { launchApp, checkApplicationServerStatus } from './launch-utils'
 
 const adminServer = 'http://localhost:1337'
 const webServer = 'http://localhost:3000'
@@ -68,7 +68,7 @@ app.whenReady().then(() => {
     window: Electron.BrowserWindow
   ): Promise<void> {
     const serverUrl = server === 'admin' ? adminServer : webServer
-    await checkStrapiServerStatus(serverUrl)
+    await checkApplicationServerStatus(serverUrl)
     appStatus[server] = 'running'
     window.webContents.send('apps:status', appStatus)
   }
