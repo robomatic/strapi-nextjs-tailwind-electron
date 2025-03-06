@@ -15,6 +15,11 @@ extraFiles:
     filter:
       - '**/*'
       - '!foo/*.js'
+  - from: '../web'
+    to: 'web'
+    filter:
+      - '**/*'
+      - '!foo/*.js'
 asarUnpack:
   # - node_modules/sqlite3
   - resources/**

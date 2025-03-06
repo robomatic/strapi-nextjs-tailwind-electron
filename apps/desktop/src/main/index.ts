@@ -2,9 +2,15 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { launchStrapi, checkStrapiServerStatus } from './strapi-process'
+import { launchApp, checkStrapiServerStatus } from './launch-utils'
 
 const adminServer = 'http://localhost:1337'
+const webServer = 'http://localhost:3000'
+
+const appStatus = {
+  admin: 'loading',
+  web: 'loading'
+}
 
 function createWindow(): void {
   // Create the browser window.
@@ -42,7 +48,8 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  launchStrapi()
+  launchApp('admin', 'start')
+  launchApp('web')
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -51,12 +58,26 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', async (_, window) => {
     optimizer.watchWindowShortcuts(window)
-    await checkStrapiServerStatus()
-    // window.loadURL(adminServer)
+    checkStatus('admin', window)
+    checkStatus('web', window)
+    //  window.loadURL(adminServer)
   })
+
+  async function checkStatus(
+    server: 'admin' | 'web',
+    window: Electron.BrowserWindow
+  ): Promise<void> {
+    const serverUrl = server === 'admin' ? adminServer : webServer
+    await checkStrapiServerStatus(serverUrl)
+    appStatus[server] = 'running'
+    window.webContents.send('apps:status', appStatus)
+  }
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('apps:checkStatus', async () => {
+    return appStatus
+  })
 
   createWindow()
 

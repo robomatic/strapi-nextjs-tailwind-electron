@@ -1,35 +1,34 @@
 import { spawn } from 'child_process'
 import { join } from 'path'
 
-const serverUrl = 'http://127.0.0.1:1337'
 const retryInterval = 1000
 
-export function launchStrapi(): void {
-  const strapiProcess = spawn('npm', ['run', 'dev:spawn'], {
-    cwd: join(__dirname, '../../../admin'),
+export function launchApp(dir: string, command = 'dev'): void {
+  const spawnProcess = spawn('npm', ['run', command], {
+    cwd: join(__dirname, '../../../', dir),
     stdio: 'inherit'
   })
 
-  strapiProcess.on('close', (code) => {
+  spawnProcess.on('close', (code) => {
     console.log(`Strapi server exited with code ${code}`)
   })
 
-  strapiProcess.on('error', (error) => {
+  spawnProcess.on('error', (error) => {
     console.error('Failed to start Strapi server:', error)
   })
 
   process.on('exit', () => {
-    strapiProcess.kill()
+    spawnProcess.kill()
   })
   process.on('SIGINT', () => {
-    strapiProcess.kill()
+    spawnProcess.kill()
   })
   process.on('SIGTERM', () => {
-    strapiProcess.kill()
+    spawnProcess.kill()
   })
 }
 
-export function checkStrapiServerStatus(): Promise<void> {
+export function checkStrapiServerStatus(serverUrl: string): Promise<void> {
   return new Promise<void>((resolve) => {
     const check = async (): Promise<void> => {
       try {
