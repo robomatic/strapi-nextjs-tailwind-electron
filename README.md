@@ -5,7 +5,9 @@ content management and creation.
 
 ## To Run
 
-From the apps/desktop directory pnpm dev
+Build the `apps/admin` app `pnpm build`
+
+From the `apps/desktop` directory `pnpm dev`
 
 ## Todo
 
